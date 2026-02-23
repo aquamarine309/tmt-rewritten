@@ -33,7 +33,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GH_PUBLISH_TOKEN }}
+          github_token: ${{ secrets.MAIN_TOKEN }}
           repository_name: aquamarine309/tmt-rewritten
           publish_dir: ./dist
           keep_files: true 

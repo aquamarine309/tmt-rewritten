@@ -1,0 +1,39 @@
+name: Deploy master
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Deploy 🚀
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 
+          cache: npm      
+
+      - name: Install dependencies
+        run: npm ci      
+
+      - name: Build project
+        run: npm run build:master 
+        env:
+          NODE_ENV: production
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_PUBLISH_TOKEN }}
+          repository_name: aquamarine309/tmt-rewritten
+          publish_dir: ./dist
+          keep_files: true 

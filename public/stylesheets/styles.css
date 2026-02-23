@@ -1,0 +1,112 @@
+* {
+  text-align: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+html {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  font-size: 62.5%;
+
+  touch-action: pan-y;
+}
+
+body {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.game-ui {
+  display: flex;
+  overflow: hidden;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-family: BlobFont, "Xia Lu Wen Kai";
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+#ui {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  scrollbar-gutter: stable;
+  height: 100%;
+}
+
+:root {
+  --color-text: #bbbbbb;
+  --color-background: #1b1a1e;
+  --color-grey: #777777;
+  --color-accent: white;
+  --color-bad: #bf8f8f;
+  --var-border-radius: 0;
+}
+
+:root .light-theme {
+  --color-background: #ffffff;
+  --color-text: #787878;
+  --color-grey: #606060;
+  --color-accent: black;
+}
+
+#browser-warning {
+  display: none;
+}
+
+@font-face {
+  font-family: BlobFont;
+  font-weight: normal;
+  src: url("blob_font_regular.ttf");
+  unicode-range: U+0000-007F. U+0370-03FF, U+1F00-1FFF;
+}
+
+@font-face {
+  font-family: BlobFont;
+  font-weight: bold;
+  src: url("blob_font_bold.ttf");
+  unicode-range: U+0000-007F, U+0370-03FF, U+1F00-1FFF;
+}
+
+@font-face {
+  font-family: "Xia Lu Wen Kai";
+  src: url("XiaLuWenKai-Light.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Xia Lu Wen Kai";
+  src: url("XiaLuWenKai-Medium.ttf");
+  font-weight: bold;
+}
+
+input:focus {
+  border-radius: 0;
+}
+
+.info {
+  color: var(--color-accent);
+  font-size: 1.8rem;
+  margin: 1rem 0;
+}
+
+.res-accent {
+  text-shadow: 0 0 1rem var(--color-accent);
+  fomg-weight: bold;
+}
+
+button {
+  font-family: BlobFont, "Xia Lu Wen Kai";
+}

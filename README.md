@@ -41,3 +41,52 @@ npm install
 
 # Start the development server
 npm run dev
+```
+
+Open [http://localhost:8080](http://localhost:8080) to see your game in action.
+
+---
+
+## 📖 Documentation
+
+**There is no documentation.**
+
+---
+
+## 🔄 Migration from Original TMT
+
+A migration guide for existing mods is planned.
+
+---
+
+## 🧪 Example Game
+
+Check out the `example/` directory (or the initial demo) to see a fully functional incremental game built with TMT Rewritten.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our Contributing Guidelines before submitting a pull request.
+
+- **Reporting bugs** – Open an issue with a clear description and steps to reproduce.
+- **Suggesting features** – We'd love to hear your ideas! Open a feature request issue.
+- **Code contributions** – Fork the repo, create a branch, and submit a PR.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgements
+
+- Acamaeda – For creating the original The Modding Tree and inspiring this rewrite.
+- The amazing Vue.js and Vite communities.
+- All contributors and testers.
+
+---
+
+Happy modding! 🎮

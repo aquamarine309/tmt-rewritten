@@ -1,8 +1,31 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Modding Tree Rewritten</title><link rel="icon" type="png" href="images/mass.png"><link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet"><link rel="stylesheet" href="stylesheets/fontawesome/css/all.css"><link rel="stylesheet" href="stylesheets/styles.css"><script defer="defer" src="js/chunk-vendors.7ee84dcd.js"></script><script defer="defer" src="js/app.97abfaf8.js"></script><link href="css/app.047d1661.css" rel="stylesheet"></head><body><div id="browser-warning">Your browser is not supported.<br>Please update to a newer browser.</div><div id="ui"></div></body><script>// We use an IE only document variable to check here to force it to show the browser warning.
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Modding Tree Rewritten</title>
+  <link rel="icon" type="png" href="/assets/icon-BkmSy0SO.png">
+  <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-DWXTDNGl.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DLiDFZHC.css">
+</head>
+
+<body>
+  <div id="browser-warning">
+    Your browser is not supported.
+    <br>
+    Please update to a newer browser.
+  </div>
+  <div id="ui"></div>
+</body>
+<script>
+  // We use an IE only document variable to check here to force it to show the browser warning.
   // For some reason, IE really does *not* want to cooperate, even when you have a file as a <script> that you load
   // in the body.
   // Other browsers will be checked whenever window.onload is ran.
   if (document.documentMode) {
     document.getElementById("ui").style.display = "none";
     document.getElementById("browser-warning").style.display = "flex";
-  }</script></html>
+  }
+</script>
+</html>

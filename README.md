@@ -26,7 +26,7 @@ This project is a clean-room implementation inspired by the original The Modding
 
 ### Prerequisites
 
-- Node.js 18+ and npm/yarn/pnpm
+- Node.js 22+ and npm/yarn/pnpm
 - Basic knowledge of Vue 3 (Composition API recommended)
 
 ### Installation

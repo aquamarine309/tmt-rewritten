@@ -11,7 +11,6 @@ const props = defineProps({
   }
 });
 const layer = props.layer;
-const color = computed(() => layer.config.color);
 const resource = ref(new Decimal(0));
 const resourceName = computed(() => layer.config.prestige.resource);
 
@@ -20,9 +19,14 @@ function update() {
 }
 useGameUpdate(update);
 
-const styleObject = computed(() => ({ color: color.value }));
 </script>
 
 <template>
-  <div class="info">You have <span :style="styleObject">{{ format(resource )}}</span> {{ resourceName }}.</div>
+  <div class="info">You have <span class="res-accent res-accent--layer">{{ format(resource )}}</span> {{ resourceName }}.</div>
 </template>
+
+<style scoped>
+.res-accent--layer {
+  color: var(--color-layer);
+}
+</style>

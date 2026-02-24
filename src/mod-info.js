@@ -3,6 +3,7 @@ import Decimal from "break_eternity.js";
 export const ModInfo = Object.freeze({
   name: "The ??? Tree",
   author: "nobody",
+  id: "Test",
   resourceName: "Points",
   discordName: "",
   discordLink: "",

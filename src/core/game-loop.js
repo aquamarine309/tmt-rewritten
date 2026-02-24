@@ -1,7 +1,6 @@
 import { DEV } from "@/env";
-import { player } from "./player";
-import { EventHub, GAME_EVENT } from "./event-hub";
-import { GameUI } from "./ui";
+import { usePlayerStore } from "./stores/player";
+import { EventHub, GAME_EVENT, GameUI } from "./event-hub";
 import { resourceProduction } from "@/production";
 
 export const GameLoop = {
@@ -10,11 +9,11 @@ export const GameLoop = {
   devSpeed: 1,
 
   get updateRate() {
-    return player.options.updateRate;
+    return usePlayerStore().player.options.updateRate;
   },
 
   set updateRate(value) {
-    player.options.updateRate = value;
+    usePlayerStore().player.options.updateRate = value;
     this.restart();
   },
 
@@ -38,6 +37,7 @@ export const GameLoop = {
 
   /* eslint-disable no-unused-vars */
   tick(ms) {
+    const player = usePlayerStore().player;
     let diff = ms ?? Date.now() - player.lastUpdate;
     player.lastUpdate += diff;
 

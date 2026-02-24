@@ -46,6 +46,7 @@
     "vue/no-multiple-objects-in-class": "warn",
     "vue/no-static-inline-styles": "warn",
     "vue/no-v-html": "off",
+    "vue/valid-v-bind": "off",
     "no-empty-function": "error",
     "no-eval": "error",
     "no-extra-bind": "error",

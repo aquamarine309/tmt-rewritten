@@ -1,16 +1,16 @@
 import "./utils/extensions";
-import { GameUI } from "./core/ui";
 import { state } from "./core/ui.init";
-import { GameStorage } from "./core/storage";
+import { useGameStorageStore } from "./core/stores/storage";
 import "./utils/crash";
 import { ModInfo } from "./mod-info";
+import { checkModID } from "./core/mod-checker";
 
 window.onload = function() {
-  GameUI.initialized = true;
-  state.view.initialized = true;
+  state.initialized = true;
   document.title = ModInfo.name;
 };
 
 export function init() {
-  GameStorage.init();
+  checkModID();
+  useGameStorageStore().init();
 }

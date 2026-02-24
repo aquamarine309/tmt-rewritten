@@ -1,5 +1,5 @@
 import { deepmergeAll } from "@/utils/deepmerge";
-import { getDefaultPlayer } from "./player";
+import { getDefaultPlayer } from "../player";
 
 export const migrations = {
   patches: {

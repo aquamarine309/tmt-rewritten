@@ -1,9 +1,9 @@
 import { deepmergeAll } from "@/utils/deepmerge";
-import { getPlayer } from "./runtime";
+import { usePlayerStore } from "@/core/stores/player";
 import { GameLoop } from "./game-loop";
 import { Async } from "@/utils/async";
 import { state } from "./ui.init";
-import { GameStorage } from "./storage";
+import { useGameStorageStore } from "./stores/storage";
 
 export function simulateTime(seconds, fast = false) {
   // The game is simulated at a base 50ms update rate, with a maximum tick count based on the values of real and fast
@@ -23,7 +23,7 @@ export function simulateTime(seconds, fast = false) {
     ticks = 50;
   }
 
-  const playerStart = deepmergeAll([{}, getPlayer()]);
+  const playerStart = deepmergeAll([{}, usePlayerStore().player]);
 
   let remainingRealSeconds = seconds;
   // During async code the number of ticks remaining can go down suddenly
@@ -56,7 +56,7 @@ export function simulateTime(seconds, fast = false) {
     }
   } else {
     const progress = {};
-    state.view.modal.progressBar = {};
+    state.modal.progressBar = {};
     Async.run(loopFn,
       ticks,
       {
@@ -65,7 +65,7 @@ export function simulateTime(seconds, fast = false) {
         sleepTime: 1,
         asyncEntry: doneSoFar => {
           GameLoop.stop();
-          state.view.modal.progressBar = {
+          state.modal.progressBar = {
             label: "Calculating Offline Simulations",
             current: doneSoFar,
             max: ticks,
@@ -81,7 +81,7 @@ export function simulateTime(seconds, fast = false) {
                 progress.maxIter -= progress.remaining - newRemaining;
                 progress.remaining = newRemaining;
                 // We update the progress bar max data (remaining will update automatically).
-                state.view.modal.progressBar.max = progress.maxIter;
+                state.modal.progressBar.max = progress.maxIter;
               }
             },
             {
@@ -97,10 +97,10 @@ export function simulateTime(seconds, fast = false) {
           };
         },
         asyncProgress: doneSoFar => {
-          state.view.modal.progressBar.current = doneSoFar;
+          state.modal.progressBar.current = doneSoFar;
         },
         asyncExit: () => {
-          state.view.modal.progressBar = undefined;
+          state.modal.progressBar = undefined;
           GameLoop.start();
         },
         then: () => {
@@ -112,5 +112,5 @@ export function simulateTime(seconds, fast = false) {
 }
 
 function afterSimulation() {
-  GameStorage.save();
+  useGameStorageStore().save();
 }

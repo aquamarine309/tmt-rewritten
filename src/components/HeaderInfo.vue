@@ -1,22 +1,15 @@
 <script setup>
 import { format } from "@/utils/format";
-import Decimal from "break_eternity.js";
-import { getPlayer } from "@/core/runtime";
-import { useGameUpdate } from "@/utils/use-game-update";
+import { usePlayerStore } from "@/core/stores/player";
 import { ModInfo } from "@/mod-info";
-import { ref } from "vue";
 
-const resource = ref(new Decimal(0));
-function update() {
-  resource.value.copyFrom(getPlayer().resource);
-}
-useGameUpdate(update);
 const resourceName = ModInfo.resourceName;
+const store = usePlayerStore();
 </script>
 
 <template>
   <div class="info">
-    <div>You have <span class="res-accent">{{ format(resource) }}</span> {{ resourceName }}.</div>
+    <div>You have <span class="res-accent">{{ format(store.player.resource) }}</span> {{ resourceName }}.</div>
   </div>
 </template>
 

@@ -1,5 +1,3 @@
-import { GameUI } from "./ui";
-
 export class EventHub {
   constructor() {
     this._handlers = {};
@@ -55,6 +53,34 @@ export class EventHub {
 
 EventHub.logic = new EventHub();
 EventHub.ui = new EventHub();
+
+export const GameUI = {
+  events: [],
+  flushPromise: undefined,
+  dispatch(event, args) {
+    const index = this.events.indexOf(event);
+    if (index !== -1) {
+      this.events.splice(index, 1);
+    }
+    if (event !== GAME_EVENT.UPDATE) {
+      this.events.push([event, args]);
+    }
+    if (this.flushPromise) return;
+    this.flushPromise = Promise.resolve()
+      .then(this.flushEvents.bind(this));
+  },
+  flushEvents() {
+    this.flushPromise = undefined;
+    for (const event of this.events) {
+      EventHub.ui.dispatch(event[0], event[1]);
+    }
+    EventHub.ui.dispatch(GAME_EVENT.UPDATE);
+    this.events = [];
+  },
+  update() {
+    this.dispatch(GAME_EVENT.UPDATE);
+  }
+};
 
 export const GAME_EVENT = {
   GAME_TICK_AFTER: "GAME_TICK_AFTER",

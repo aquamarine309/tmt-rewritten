@@ -1,6 +1,6 @@
 import { DC, LAYER_TYPE } from "@/utils/constants";
 import { GAME_EVENT } from "@/core/event-hub";
-import { getPlayer } from "../runtime";
+import { usePlayerStore } from "@/core/stores/player";
 
 export default {
   id: "p",
@@ -15,15 +15,19 @@ export default {
     startingResource: DC.D0,
     resource: "Prestige Points",
     baseResource: "Points",
-    getBaseAmount() { return getPlayer().resource; },
-    setBaseAmount(value) { getPlayer().resource = value; },
+    getBaseAmount() {
+      return usePlayerStore().player.resource;
+    },
+    setBaseAmount(value) {
+      usePlayerStore().player.resource = value;
+    },
     type: LAYER_TYPE.NORMAL,
     requirement: DC.E1,
     exponent: DC.D0_5,
     gainMult: DC.D1,
     gainExp: DC.D1,
     resetFn() {
-      getPlayer().resource = DC.D0;
+      usePlayerStore().player.resource = DC.D0;
     }
   },
   tabs: ["PTab"]

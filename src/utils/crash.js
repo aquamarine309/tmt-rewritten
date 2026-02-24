@@ -1,4 +1,4 @@
-import { GameUI } from "../core/ui";
+import { GameUI } from "../core/event-hub";
 
 export class NotImplementedError extends Error {
   constructor() {

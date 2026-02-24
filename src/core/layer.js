@@ -6,7 +6,7 @@ import { PrestigeState } from "./prestige";
 import { TabState } from "./tabs";
 import { state } from "./ui.init";
 import { DC } from "@/utils/constants";
-import { getPlayer } from "./runtime";
+import { usePlayerStore } from "@/core/stores/player";
 
 class LayerState {
   constructor(config) {
@@ -29,11 +29,11 @@ class LayerState {
   }
   
   get isOpen() {
-    return state.view.layer === this.id;
+    return state.layer === this.id;
   }
   
   show() {
-     state.view.layer = this.id;
+     state.layer = this.id;
      this.tabs[0].show();
   }
 
@@ -61,7 +61,7 @@ class LayerState {
   }
   
   get data() {
-    return getPlayer().layers[this.id];
+    return usePlayerStore().getLayer(this.id);
   }
   
   get resource() {

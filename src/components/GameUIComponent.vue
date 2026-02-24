@@ -5,14 +5,14 @@ import GameTab from "./GameTab";
 import { state } from "@/core/ui.init";
 import { computed } from "vue";
 
-const tabVisible = computed(() => state.view.layer !== "");
+const tabVisible = computed(() => state.layer !== "");
 const singlePage = false;
 
 </script>
 
 <template>
   <div
-    v-if="state.view.initialized"
+    v-if="state.initialized"
     class="game-ui"
   >
     <div
@@ -29,7 +29,7 @@ const singlePage = false;
       <GameTab />
       <div
         class="back-btn"
-        @click="state.view.layer = ''"
+        @click="state.layer = ''"
       >
         ←
       </div>

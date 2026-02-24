@@ -1,5 +1,5 @@
-import { getPlayer } from "./core/runtime";
+import { usePlayerStore } from "./core/stores/player";
 
 export function resourceProduction() {
-  return getPlayer().layers.p.resource;
+  return usePlayerStore().getLayer("p").resource;
 }

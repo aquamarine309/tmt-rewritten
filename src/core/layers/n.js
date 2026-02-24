@@ -1,7 +1,7 @@
 import { DC, LAYER_TYPE } from "@/utils/constants";
 import { GAME_EVENT } from "@/core/event-hub";
 import { Layer } from "@/core/layer";
-import { getPlayer } from "@/core/runtime";
+import { usePlayerStore } from "@/core/stores/player";
 
 export default {
   id: "n",
@@ -25,7 +25,7 @@ export default {
     gainExp: DC.D1,
     resetFn() {
       Layer.p.resource = DC.D0;
-      getPlayer().resource = DC.E1;
+      usePlayerStore().player.resource = DC.E1;
     }
   },
   tabs: ["NTab"]

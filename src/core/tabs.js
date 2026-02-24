@@ -12,10 +12,10 @@ export class TabState {
   }
   
   get isOpen() {
-    return state.view.tab === this.id;
+    return state.tab === this.id;
   }
   
   show() {
-    state.view.tab = this.id;
+    state.tab = this.id;
   }
 }

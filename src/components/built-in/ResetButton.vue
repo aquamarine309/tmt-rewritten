@@ -2,7 +2,7 @@
 import { useGameUpdate } from "@/utils/use-game-update";
 import { computed, ref } from "vue";
 import Decimal from "break_eternity.js";
-import { format } from "@/utils/format";
+import { format, quantify } from "@/utils/format";
 
 const props = defineProps({
   layer: {
@@ -24,6 +24,7 @@ const canReset = ref(false);
 
 const classObject = computed(() => ({
   "reset-btn": true,
+  "main-btn": true,
   "reset-btn--available": canReset.value
 }));
 
@@ -45,17 +46,17 @@ function reset() {
 </script>
 
 <template>
-  <div>
+  <div class="reset-row">
     <button
       :style="styleObject"
       :class="classObject"
       @click="reset"
     >
-      <span>Reset for +{{ format(gain, 0) }} {{ resourceName }}</span>
+      <span>Reset for +{{ quantify(resourceName, gain, 0) }}</span>
       <br>
-      <span>Next at: {{ format(nextAt) }} {{ baseResource }}</span>
+      <span>Next at: {{ quantify(baseResource, nextAt) }}</span>
     </button>
-    <div class="info">You have {{ format(resource) }} {{ baseResource }}.</div>
+    <div class="info">You have {{ quantify(baseResource, resource) }}.</div>
   </div>
 </template>
 
@@ -63,13 +64,18 @@ function reset() {
 .reset-btn {
   width: 18rem;
   height: 12rem;
-  border: 5px solid rgba(0, 0, 0, 0.125);
-  color: rgba(0, 0, 0, 0.8);
-  background: var(--color-bad);
-  border-radius: 3rem;
 }
 
 .reset-btn--available {
   background: var(--color-layer);
+  cursor: pointer;
+}
+
+.reset-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

@@ -4,10 +4,18 @@ import HeaderInfo from "./HeaderInfo";
 import GameTab from "./GameTab";
 import { state } from "@/core/ui.init";
 import { computed } from "vue";
+import { ModInfo } from "@/mod-info";
+import { usePlayerStore } from "@/core/stores/player";
+import ForcedTabSidebar from "./ForcedTabSidebar";
 
-const tabVisible = computed(() => state.layer !== "");
-const singlePage = false;
+const tabVisible = computed(() => state.layer !== "" || state.forcedTab !== "");
+const version = ModInfo.versionDisplay;
+const store = computed(() => usePlayerStore());
 
+function clearTab() {
+  state.layer = "";
+  state.forcedTab = "";
+}
 </script>
 
 <template>
@@ -17,10 +25,12 @@ const singlePage = false;
   >
     <div
       class="game-panel"
-      v-if="!singlePage || !tabVisible"
+      v-if="!store.player.options.singlePage || !tabVisible"
     >
       <HeaderInfo />
       <TreeLayout />
+      <ForcedTabSidebar />
+      <div class="version">v{{ version }}</div>
     </div>
     <div
       v-if="tabVisible"
@@ -29,7 +39,7 @@ const singlePage = false;
       <GameTab />
       <div
         class="back-btn"
-        @click="state.layer = ''"
+        @click="clearTab()"
       >
         ←
       </div>
@@ -54,6 +64,15 @@ const singlePage = false;
   position: absolute;
   left: 2rem;
   top: 1rem;
+  font-weight: bold;
+}
+
+.version {
+  color: var(--color-accent);
+  font-size: 2rem;
+  position: absolute;
+  right: 3rem;
+  top: 2rem;
   font-weight: bold;
 }
 </style>

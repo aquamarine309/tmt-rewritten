@@ -1,5 +1,9 @@
 <script setup>
-import { MainDisplay, ResetButton } from "@/components/built-in";
+import {
+  MainDisplay,
+  ResetButton,
+  MilestoneContainer
+} from "@/components/built-in";
 
 defineProps(["layer"]);
 </script>
@@ -8,5 +12,6 @@ defineProps(["layer"]);
   <div>
     <MainDisplay :layer />
     <ResetButton :layer />
+    <MilestoneContainer :layer />
   </div>
 </template>

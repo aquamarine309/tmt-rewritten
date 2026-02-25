@@ -5,17 +5,15 @@ export class TabState {
     this.component = config.is;
     this.id = config.id;
     this.condition = config.condition;
+    this.isDefault = config.isDefault ?? false;
   }
   
   get isUnlocked() {
     return !this.condition || this.condition();
   }
   
-  get isOpen() {
-    return state.tab === this.id;
-  }
-  
   show() {
     state.tab = this.id;
+    state.forcedTab = "";
   }
 }

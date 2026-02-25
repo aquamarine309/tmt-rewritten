@@ -1,0 +1,97 @@
+.zero-tooltip__fixed {
+  position: fixed;
+}
+
+.zero-tooltip__absolute {
+  position: absolute;
+}
+
+.zero-tooltip__box-border {
+  box-sizing: border-box;
+}
+
+.zero-tooltip__inline-block {
+  display: inline-block;
+}
+
+.zero-tooltip__w-fit {
+  width: fit-content;
+}
+
+.zero-tooltip__whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
+
+.zero-tooltip__break-words {
+  overflow-wrap: break-word;
+}
+
+.zero-tooltip__text-sm {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+}
+
+.zero-tooltip__text-white {
+  color: white;
+}
+
+.zero-tooltip__rounded-md {
+  border-radius: 0.5rem;
+}
+
+.zero-tooltip__border-solid {
+  border-style: solid;
+}
+
+.zero-tooltip__border-gray {
+  border-color: white;
+}
+
+.zero-tooltip__border-x-transparent {
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.zero-tooltip__border-y-transparent {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.zero-tooltip__border-b-transparent {
+  border-bottom-color: transparent;
+}
+
+.zero-tooltip__border-l-transparent {
+  border-left-color: transparent;
+}
+
+.zero-tooltip__border-r-transparent {
+  border-right-color: transparent;
+}
+
+.zero-tooltip__border-t-transparent {
+  border-top-color: transparent;
+}
+
+.zero-tooltip__bg-gray {
+  background-color: black;
+  border: 1px solid white !important;
+}
+
+.zero-tooltip__px-2-5 {
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+}
+
+.zero-tooltip__py-1-5 {
+  padding-top: 0.48rem;
+  padding-bottom: 0.48rem;
+}
+
+.zero-tooltip__opacity-0 {
+  opacity: 0;
+}
+
+.zero-tooltip__shadow {
+  box-shadow: 0 2px 12px #0000001a;
+}

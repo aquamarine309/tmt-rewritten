@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import Decimal from "break_eternity.js";
-import { format } from "@/utils/format";
+import { format, pluralize } from "@/utils/format";
 import { useGameUpdate } from "@/utils/use-game-update";
 
 const props = defineProps({
@@ -22,7 +22,7 @@ useGameUpdate(update);
 </script>
 
 <template>
-  <div class="info">You have <span class="res-accent res-accent--layer">{{ format(resource )}}</span> {{ resourceName }}.</div>
+  <div class="info">You have <span class="res-accent res-accent--layer">{{ format(resource) }}</span> {{ pluralize(resourceName, resource) }}.</div>
 </template>
 
 <style scoped>

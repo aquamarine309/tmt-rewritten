@@ -73,7 +73,10 @@ export const Async = {
     config.progress.maxIter = maxIter;
     config.progress.remaining = this.runForTime(fun, config.progress.maxIter, config);
     const sleepTime = config.sleepTime || 1;
-    if (!config.progress.remaining) return;
+    if (!config.progress.remaining) {
+    if (config.asyncExit) config.asyncExit();
+      return;
+    };
     if (config.asyncEntry) config.asyncEntry(config.progress.maxIter - config.progress.remaining);
     do {
       await this.sleepPromise(sleepTime);

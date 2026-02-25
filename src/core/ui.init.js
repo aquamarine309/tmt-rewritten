@@ -8,5 +8,6 @@ export const state = reactive({
   },
   layer: "",
   tab: 0,
+  forcedTab: "",
   initialized: false
 });

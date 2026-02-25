@@ -7,11 +7,21 @@ import { TabState } from "./tabs";
 import { state } from "./ui.init";
 import { DC } from "@/utils/constants";
 import { usePlayerStore } from "@/core/stores/player";
+import { UpgradeState, MilestoneState } from "./game-mechanics";
+import { Lazy } from "./cache";
+import Decimal from "break_eternity.js";
 
 class LayerState {
+  prestige = null;
+  tabs = null;
+  upgrades = null;
+  milestones = null;
+  
+  cheapestUpgrade = null;
+
   constructor(config) {
     this.config = config;
-    EventHub.logic.on(config.checkEvent, (...args) => this.tryUnlock(...args));
+    EventHub.logic.on(config.checkEvent, args => this.tryUnlock(...args));
     this.prestige = new PrestigeState(config.prestige, this);
     const tabs = config.tabs;
     this.tabs = tabs.map((tab, index) => {
@@ -26,6 +36,26 @@ class LayerState {
         ...tab
       });
     });
+    
+    if (config.upgrades) {
+      this.upgrades = mapGameDataToObject(
+        config.upgrades,
+        upg => new UpgradeState(upg, this)
+      );
+      this.cheapestUpgrade = new Lazy(() => {
+        const upgradesLeft = this.upgrades.all.filter(x => x.isAvailableForPurchase);
+        if (upgradesLeft.length === 0) return null;
+        return upgradesLeft.reduce((a, b) => a.cost.gt(b.cost) ? b : a);
+      });
+      this.cheapestUpgrade.invalidateOn(GAME_EVENT.UPGRADE_BOUGHT);
+    }
+    
+    if (config.milestones) {
+      this.milestones = mapGameDataToObject(
+        config.milestones,
+        milestone => new MilestoneState(milestone, this)
+      );
+    }
   }
   
   get isOpen() {
@@ -57,6 +87,9 @@ class LayerState {
     const playerData = this.config.getPlayerData();
     playerData.isUnlocked = false;
     playerData.resource = this.config.prestige.startingResource || DC.D0;
+    if (this.upgrade !== null) {
+      playerData.upgrades = new Set();
+    }
     return playerData;
   }
   
@@ -76,6 +109,13 @@ class LayerState {
     if (this.isUnlocked || !this.config.requirement(...args)) return;
     this.isUnlocked = true;
     EventHub.dispatch(GAME_EVENT.LAYER_UNLOCKED);
+  }
+  
+  resetUpgrades() {
+    if (this.upgrades === null) return;
+    for (const upgrade of this.upgrades.all) {
+      upgrade.isBought = false;
+    }
   }
 }
 

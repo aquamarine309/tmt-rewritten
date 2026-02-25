@@ -24,19 +24,19 @@ export class PrestigeState {
   }
   
   get exponent() {
-    return this.config.exponent;
+    return funOrVal(this.config.exponent);
   }
   
   get gainMult() {
-    return this.config.gainMult;
+    return funOrVal(this.config.gainMult);
   }
   
   get gainExp() {
-    return this.config.gainExp;
+    return funOrVal(this.config.gainExp);
   }
   
   get canReset() {
-    return this.currency.gte(this.requirement);
+    return this.currency.gte(this.requirementAt(DC.D1));
   }
   
   gainedResourceAt(amount) {
@@ -49,7 +49,7 @@ export class PrestigeState {
     return null;
   }
   
-  requirememtAt(amount) {
+  requirementAt(amount) {
     switch (this.type) {
       case LAYER_TYPE.NORMAL: {
         return amount.div(this.gainMult.pow(this.gainExp)).root(this.exponent).times(this.requirement);
@@ -63,7 +63,7 @@ export class PrestigeState {
   }
   
   get nextAt() {
-    return this.requirememtAt(this.pending.add(1));
+    return this.requirementAt(this.pending.add(1));
   }
   
   reset() {

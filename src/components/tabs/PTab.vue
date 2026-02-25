@@ -1,5 +1,9 @@
 <script setup>
-import { MainDisplay, ResetButton } from "@/components/built-in";
+import {
+  MainDisplay,
+  ResetButton,
+  UpgradeGrid
+} from "@/components/built-in";
 
 defineProps(["layer"]);
 </script>
@@ -8,5 +12,6 @@ defineProps(["layer"]);
   <div>
     <MainDisplay :layer />
     <ResetButton :layer />
+    <UpgradeGrid :layer />
   </div>
 </template>

@@ -3,7 +3,7 @@ import { init } from "./game";
 
 function isLocalEnvironment() {
   const href = window.location.href;
-  return href.includes("file") || href.includes("127.0.0.1") || href.includes("localhost") || href.includes("8080");
+  return href.includes("file") || href.includes("127.0.0.1") || href.includes("localhost") || href.includes("192.168");
 }
 
 if (isLocalEnvironment()) {

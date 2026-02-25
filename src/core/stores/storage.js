@@ -7,6 +7,8 @@ import { GameLoop } from "@/core/game-loop";
 import { simulateTime } from "@/core/offline-simulation";
 import { EventHub, GAME_EVENT, GameUI } from "@/core/event-hub";
 import { usePlayerStore } from "./player";
+import { quantify } from "@/utils/format";
+import { state } from "@/core/ui.init";
 
 export const useGameStorageStore = defineStore("gameStorage", {
   state: () => ({
@@ -50,7 +52,6 @@ export const useGameStorageStore = defineStore("gameStorage", {
     exportToClipboard() {
       const player = usePlayerStore().player;
       copyToClipboard(Serializer.encode(JSON.stringify(player)));
-      GameUI.notify.info("");
     },
 
     importSave(save) {
@@ -86,6 +87,8 @@ export const useGameStorageStore = defineStore("gameStorage", {
         GameLoop.restart();
         this.save();
       }
+      state.tab = "";
+      state.forcedTab = "";
       EventHub.dispatch(GAME_EVENT.AFTER_LOADING);
     },
 

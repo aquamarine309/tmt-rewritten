@@ -5,7 +5,8 @@ import { Layers } from "./layer";
 export function getDefaultPlayer() {
   return {
     options: {
-      updateRate: 33
+      updateRate: 33,
+      singlePage: false
     },
     lastUpdate: Date.now(),
     resource: Decimal.fromValue_noAlloc(ModInfo.startingResource),

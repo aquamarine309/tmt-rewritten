@@ -1,6 +1,9 @@
 import { DC, LAYER_TYPE } from "@/utils/constants";
 import { GAME_EVENT } from "@/core/event-hub";
 import { usePlayerStore } from "@/core/stores/player";
+import { Layer } from "@/core/layer";
+
+import upgrades from "./upgrades";
 
 export default {
   id: "p",
@@ -13,8 +16,8 @@ export default {
   },
   prestige: {
     startingResource: DC.D0,
-    resource: "Prestige Points",
-    baseResource: "Points",
+    resource: "Prestige Point",
+    baseResource: "Point",
     getBaseAmount() {
       return usePlayerStore().player.resource;
     },
@@ -24,11 +27,12 @@ export default {
     type: LAYER_TYPE.NORMAL,
     requirement: DC.E1,
     exponent: DC.D0_5,
-    gainMult: DC.D1,
+    gainMult: () => DC.D1.timesEffectOf(Layer.p.upgrades[14]),
     gainExp: DC.D1,
     resetFn() {
       usePlayerStore().player.resource = DC.D0;
     }
   },
-  tabs: ["PTab"]
+  tabs: ["PTab"],
+  upgrades
 };

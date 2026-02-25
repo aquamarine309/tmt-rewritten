@@ -1,3 +1,5 @@
+import { EventHub } from "./event-hub";
+
 export class Lazy {
   constructor(getValue) {
     this._getValue = getValue;

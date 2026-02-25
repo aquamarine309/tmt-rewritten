@@ -15,6 +15,11 @@ const styleObject = computed(() => ({
 <template>
   <div class="game-tab">
     <component
+      v-if="state.forcedTab"
+      :is="components[state.forcedTab]"
+    />
+    <component
+      v-else-if="tab"
       :is="components[tab.component]"
       :style="styleObject"
       :layer="layer"

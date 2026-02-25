@@ -1,4 +1,4 @@
-import { format, formatX } from "@/utils/format";
+import { format, formatX, formatPow } from "@/utils/format";
 import { DC } from "@/utils/constants";
 import { Layer } from "@/core/layer";
 import { usePlayerStore } from "@/core/stores/player";
@@ -33,9 +33,18 @@ export default {
     id: 14,
     title: "Easy Reset",
     description: "You can gain more Prestige Points based on Prestige Points you have.",
-    effect: () => Layer.p.resource.add(1).log10().times(0.05).add(1),
+    effect: () => Layer.p.resource.add(1).log10().times(0.05).add(1).powEffectOf(Layer.p.upgrades[21]),
     formatEffect: value => formatX(value),
     cost: DC.E1,
     isUnlocked: () => Layer.p.upgrades[13].isBought
+  },
+  21: {
+    id: 21,
+    title: "Search Upgrade",
+    description: "NaN Point provides a power to Upgrade 14.",
+    effect: () => Layer.n.resource.add(1).sqrt(),
+    formatEffect: value => formatPow(value),
+    cost: DC.D20,
+    isUnlocked: () => Layer.p.upgrades[14].isBought && Layer.n.milestones[0].isReached
   }
 }

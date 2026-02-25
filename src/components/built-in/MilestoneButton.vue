@@ -37,7 +37,7 @@ useGameUpdate(update);
 
 <style scoped>
 .milestone-btn {
-  width: 100%;
+  width: 40rem;
   min-height: 8rem;
   height: auto;
   border-radius: 0;

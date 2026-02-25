@@ -34,7 +34,7 @@ function clearTab() {
     </div>
     <div
       v-if="tabVisible"
-      class="game-panel"
+      class="game-panel tab-panel"
     >
       <GameTab />
       <div
@@ -56,6 +56,10 @@ function clearTab() {
 
 .game-panel:not(:first-child) {
   border-left: 2px solid #808080;
+}
+
+.tab-panel {
+  padding-top: 7.5rem;
 }
 
 .back-btn {

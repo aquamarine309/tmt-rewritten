@@ -39,11 +39,13 @@ function getUpgrade(x, y) {
       v-for="i in maxRow"
       :key="i + '-row'"
     >
-      <UpgradeButton
-        v-for="j in maxColumn"
-        :key="i * 10 + j + ' -upgrade'"
-        :upgrade="getUpgrade(i, j)"
-      />
+      <template v-for="j in maxColumn">
+        <UpgradeButton
+          v-if="getUpgrade(i, j)"
+          :key="i * 10 + j + '-upgrade'"
+          :upgrade="getUpgrade(i, j)"
+        />
+      </template>
     </div>
   </div>
 </template>

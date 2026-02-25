@@ -8,7 +8,7 @@ import EffectDisplay from "./EffectDisplay";
 const props = defineProps({
   upgrade: {
     type: Object,
-    required: false
+    required: true
   }
 });
 
@@ -52,7 +52,7 @@ useGameUpdate(update);
 
 <template>
   <button
-    v-if="upgrade && isUnlocked"
+    v-if="isUnlocked"
     :class="classObject"
     @click="purchase"
   >

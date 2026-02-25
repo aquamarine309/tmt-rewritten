@@ -1,8 +1,8 @@
-name: Deploy master
+name: Deploy docs
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "docs" ]
   workflow_dispatch:
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
         run: npm ci      
 
       - name: Build project
-        run: npm run build 
+        run: npm run docs:build 
         env:
           NODE_ENV: production
 
@@ -36,4 +36,5 @@ jobs:
           github_token: ${{ secrets.MAIN_TOKEN }}
           repository_name: aquamarine309/tmt-rewritten
           publish_dir: ./dist
-          keep_files: true 
+          publish_branch: docs-page
+          keep_files: true

@@ -20,11 +20,12 @@ export default {
     baseResource: "Prestige Point",
     getBaseAmount() { return Layer.p.resource; },
     setBaseAmount(value) { Layer.p.resource = value; },
-    type: LAYER_TYPE.NORMAL,
+    type: LAYER_TYPE.STATIC,
     requirement: DC.D20,
-    exponent: DC.D0_1,
+    exponent: DC.D1,
     gainMult: DC.D1,
     gainExp: DC.D1,
+    base: DC.D2,
     resetFn() {
       Layer.p.resource = DC.D0;
       Layer.p.resetUpgrades();

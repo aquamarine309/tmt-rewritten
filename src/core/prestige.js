@@ -35,8 +35,20 @@ export class PrestigeState {
     return funOrVal(this.config.gainExp);
   }
   
+  get base() {
+    return funOrVal(this.config.base);
+  }
+  
   get canReset() {
-    return this.currency.gte(this.requirementAt(DC.D1));
+    switch (this.type) {
+      case LAYER_TYPE.NORMAL: {
+        return this.currency.gte(this.requirementAt(DC.D1));
+      }
+      case LAYER_TYPE.STATIC: {
+        return this.currency.gte(this.requirementAt(this.layer.resource.add(1)));
+      }
+    }
+    return false;
   }
   
   gainedResourceAt(amount) {
@@ -44,6 +56,10 @@ export class PrestigeState {
     switch (this.type) {
       case LAYER_TYPE.NORMAL: {
         return amount.div(this.requirement).pow(this.exponent).times(this.gainMult.pow(this.gainExp));
+      }
+      case LAYER_TYPE.STATIC: {
+        // Formula; (gainExp * log_base(amount / (req * mul)))^(1 / exp)
+        return amount.div(this.requirement.times(this.gainMult)).log(this.base).times(this.gainExp).pow(this.exponent.recip());
       }
     }
     return null;
@@ -54,16 +70,37 @@ export class PrestigeState {
       case LAYER_TYPE.NORMAL: {
         return amount.div(this.gainMult.pow(this.gainExp)).root(this.exponent).times(this.requirement);
       }
+      case LAYER_TYPE.STATIC: {
+        return this.base.pow(amount.pow(this.exponent).div(this.gainExp)).times(this.requirement.times(this.gainMult));
+      }
     }
     return null;
   }
   
   get pending() {
-    return this.gainedResourceAt(this.currency).floor();
+    if (!this.canReset) return DC.D0;
+    const gain = this.gainedResourceAt(this.currency).floor();
+    switch (this.type) {
+      case LAYER_TYPE.NORMAL: {
+        return gain;
+      }
+      case LAYER_TYPE.STATIC: {
+        return gain.minus(this.layer.resource);
+      }
+    }
+    return null;
   }
   
   get nextAt() {
-    return this.requirementAt(this.pending.add(1));
+    switch (this.type) {
+      case LAYER_TYPE.NORMAL: {
+        return this.requirementAt(this.pending.add(1));
+      }
+      case LAYER_TYPE.STATIC: {
+        return this.requirementAt(this.pending.add(this.layer.resource).add(1));
+      }
+    }
+    return null;
   }
   
   reset() {

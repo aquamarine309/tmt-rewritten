@@ -2,7 +2,8 @@
 import {
   MainDisplay,
   ResetButton,
-  UpgradeGrid
+  UpgradeGrid,
+  InfoBox
 } from "@/components/built-in";
 
 defineProps(["layer"]);
@@ -10,6 +11,7 @@ defineProps(["layer"]);
 
 <template>
   <div>
+    <InfoBox :info="layer.info.first" />
     <MainDisplay :layer />
     <ResetButton :layer />
     <UpgradeGrid :layer />

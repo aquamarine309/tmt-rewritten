@@ -1,21 +1,24 @@
 import { mapGameDataToObject } from "@/utils/map-game-data";
 import { LayerData } from "./layers";
-export { LayerConnections, LayerLayout } from "./layers";
 import { EventHub, GAME_EVENT } from "./event-hub";
 import { PrestigeState } from "./prestige";
+import { InfoState } from "./info";
 import { TabState } from "./tabs";
+import { UpgradeState, MilestoneState } from "./game-mechanics";
 import { state } from "./ui.init";
 import { DC } from "@/utils/constants";
 import { usePlayerStore } from "@/core/stores/player";
-import { UpgradeState, MilestoneState } from "./game-mechanics";
 import { Lazy } from "./cache";
 import Decimal from "break_eternity.js";
+
+export { LayerConnections, LayerLayout } from "./layers";
 
 class LayerState {
   prestige = null;
   tabs = null;
   upgrades = null;
   milestones = null;
+  info = null;
   
   cheapestUpgrade = null;
 
@@ -54,6 +57,13 @@ class LayerState {
       this.milestones = mapGameDataToObject(
         config.milestones,
         milestone => new MilestoneState(milestone, this)
+      );
+    }
+    
+    if (config.info) {
+      this.info = mapGameDataToObject(
+        config.info,
+        info => new InfoState(info)
       );
     }
   }
@@ -116,6 +126,10 @@ class LayerState {
     for (const upgrade of this.upgrades.all) {
       upgrade.isBought = false;
     }
+  }
+  
+  get resName() {
+    return this.config.prestige.resource;
   }
 }
 

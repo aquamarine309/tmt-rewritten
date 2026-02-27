@@ -2,14 +2,13 @@
 import MilestoneButton from "./MilestoneButton";
 import { computed } from "vue";
 
-const props = defineProps({
+const { layer } = defineProps({
   layer: {
     type: Object,
     required: true
   }
 });
 
-const layer = props.layer;
 const milestones = computed(() => layer.milestones.all);
 </script>
 

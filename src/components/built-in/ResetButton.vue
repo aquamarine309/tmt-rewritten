@@ -1,62 +1,39 @@
 <script setup>
-import { useGameUpdate } from "@/utils/use-game-update";
-import { computed, ref } from "vue";
-import Decimal from "break_eternity.js";
+import { computed } from "vue";
 import { format, quantify } from "@/utils/format";
 
-const props = defineProps({
+const { layer } = defineProps({
   layer: {
     type: Object,
     required: true
   }
 });
 
-const layer = props.layer;
-const prestige = layer.prestige;
-const color = computed(() => layer.config.color);
-const resource = ref(new Decimal(0));
-const nextAt = ref(new Decimal(0));
-const gain = ref(new Decimal(0));
+const prestige = computed(() => layer.prestige);
 const baseResource = computed(() => layer.config.prestige.baseResource);
-const resourceName = computed(() => layer.config.prestige.resource);
-
-const canReset = ref(false);
+const resourceName = computed(() => layer.resName);
 
 const classObject = computed(() => ({
   "reset-btn": true,
   "main-btn": true,
-  "reset-btn--available": canReset.value
+  "reset-btn--available": prestige.value.canReset
 }));
-
-const styleObject = computed(() => ({
-  "--color-layer": color.value
-}));
-
-function update() {
-  canReset.value = prestige.canReset;
-  resource.value.copyFrom(prestige.currency);
-  gain.value.copyFrom(prestige.pending);
-  nextAt.value.copyFrom(prestige.nextAt);
-}
-useGameUpdate(update);
-
 function reset() {
-  prestige.reset();
+  prestige.value.reset();
 }
 </script>
 
 <template>
   <div class="reset-row">
     <button
-      :style="styleObject"
       :class="classObject"
       @click="reset"
     >
-      <span>Reset for +{{ quantify(resourceName, gain, 0) }}</span>
+      <span>Reset for +{{ quantify(resourceName, prestige.pending, 0) }}</span>
       <br>
-      <span>Next at: {{ quantify(baseResource, nextAt) }}</span>
+      <span>Next at: {{ quantify(baseResource, prestige.nextAt) }}</span>
     </button>
-    <div class="info">You have {{ quantify(baseResource, resource) }}.</div>
+    <div class="info">You have {{ quantify(baseResource, prestige.currency) }}.</div>
   </div>
 </template>
 

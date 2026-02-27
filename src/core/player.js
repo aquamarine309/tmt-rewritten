@@ -8,6 +8,9 @@ export function getDefaultPlayer() {
       updateRate: 33,
       singlePage: false
     },
+    records: {
+      gameCreated: Date.now()
+    },
     lastUpdate: Date.now(),
     resource: Decimal.fromValue_noAlloc(ModInfo.startingResource),
     version: ModInfo.version,

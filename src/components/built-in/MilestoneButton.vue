@@ -1,33 +1,25 @@
 <script setup>
-import { ref, computed } from "vue";
-import { useGameUpdate } from "@/utils/use-game-update";
+import { computed } from "vue";
 import EffectDisplay from "./EffectDisplay";
 import { quantify } from "@/utils/format";
 
-const props = defineProps({
+const { milestone } = defineProps({
   milestone: {
     type: Object,
     required: true
   }
 });
 
-const milestone = props.milestone;
 const layer = computed(() => milestone.layer);
-const isReached = ref(false);
 const requirement = computed(() => milestone.requirement);
 const resource = computed(() => layer.value.config.prestige.resource);
 const description = computed(() => funOrVal(milestone.config.description));
-
-function update() {
-  isReached.value = milestone.isReached;
-}
-useGameUpdate(update);
 </script>
 
 <template>
   <button
     class="main-btn milestone-btn"
-    :class="{ 'bought': isReached }"
+    :class="{ 'bought': milestone.isReached }"
   >
     <span class="milestone-title">{{ quantify(resource, requirement, 0) }}</span>
     <span>{{ description }}</span>

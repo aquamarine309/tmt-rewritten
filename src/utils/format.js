@@ -85,7 +85,6 @@ export function format(decimal, precision = 2, allowSmall) {
   allowSmall ??= ModInfo.allowSmall;
   const num = Decimal.fromValue_noAlloc(decimal);
   if (isNaN(num.sign) || isNaN(num.layer) || isNaN(num.mag)) {
-    player.hasNaN = true;
     return "NaN";
   }
   if (num.sign < 0) return `-${format(num.neg(), precision, allowSmall)}`;
@@ -182,7 +181,7 @@ export function formatTime(seconds) {
   const SECONDS_PER_DAY = 24 * SECONDS_PER_HOUR;
   const SECONDS_PER_YEAR = 365 * SECONDS_PER_DAY;
 
-  const totalSeconds = Math.floor(seconds);
+  const totalSeconds = seconds;
 
   const years = Math.floor(totalSeconds / SECONDS_PER_YEAR);
   const remainingAfterYears = totalSeconds % SECONDS_PER_YEAR;

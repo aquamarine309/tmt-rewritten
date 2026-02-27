@@ -10,6 +10,12 @@ import { state } from "@/core/ui.init";
     >
       <i class="fas fa-cog" />
     </button>
+    <button
+      class="main-btn forced-tab-btn info-blue"
+      @click="state.forcedTab = 'InfoTab'"
+    >
+      <i class="fas fa-info" />
+    </button>
   </div>
 </template>
 
@@ -28,5 +34,9 @@ import { state } from "@/core/ui.init";
   height: 6rem;
   color: var(--color-accent);
   font-size: 3rem;
+}
+
+.info-blue {
+  color: aquamarine;
 }
 </style>

@@ -2,7 +2,7 @@
 import UpgradeButton from "./UpgradeButton";
 import { computed } from "vue";
 
-const props = defineProps({
+const { layer, visibleRows } = defineProps({
   layer: {
     type: Object,
     required: true
@@ -13,12 +13,12 @@ const props = defineProps({
   }
 });
 
-const upgrades = computed(() => props.layer.upgrades);
+const upgrades = computed(() => layer.upgrades);
 
 const visibleUpgrades = computed(() => {
   const u = upgrades.value.all;
-  if (props.visibleRows) {
-    return u.filter(x => props.visibleRows.includes(Math.floor(x.id / 10)));
+  if (visibleRows) {
+    return u.filter(x => visibleRows.includes(Math.floor(x.id / 10)));
   }
   return u;
 });

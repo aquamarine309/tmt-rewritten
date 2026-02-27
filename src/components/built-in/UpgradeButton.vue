@@ -1,37 +1,32 @@
 <script setup>
-import { useGameUpdate } from "@/utils/use-game-update";
-import Decimal from "break_eternity.js";
 import { format, quantify } from "@/utils/format";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import EffectDisplay from "./EffectDisplay";
 
-const props = defineProps({
+const { upgrade } = defineProps({
   upgrade: {
     type: Object,
     required: true
   }
 });
 
-const upgrade = props.upgrade;
 const layer = computed(() => upgrade.layer);
-const isUnlocked = ref(false);
-const isBought = ref(false);
-const canBeBought = ref(false);
 const cost = computed(() => upgrade.cost);
 const title = computed(() => upgrade.title);
+const tooltip = computed(() => upgrade.config.tooltip || "");
 const description = computed(() => funOrVal(upgrade.config.description));
 const costResource = computed(() => {
   if (upgrade.config.getCurrency) {
     return upgrade.config.currencyName;
   }
-  return layer.value.config.prestige.resource;
+  return layer.value.resName;
 });
 
 const classObject = computed(() => ({
   "main-btn": true,
   "upgrade-btn": true,
-  "upgrade-btn--available": canBeBought.value,
-  "bought": isBought.value
+  "upgrade-btn--available": upgrade.canBeBought,
+  "bought": upgrade.isBought
 }));
 
 function formatCost(cost) {
@@ -42,19 +37,14 @@ function purchase() {
   upgrade.purchase();
 }
 
-function update() {
-  isUnlocked.value = upgrade.isUnlocked;
-  isBought.value = upgrade.isBought;
-  canBeBought.value = upgrade.canBeBought;
-}
-useGameUpdate(update);
 </script>
 
 <template>
   <button
-    v-if="isUnlocked"
+    v-if="upgrade.isUnlocked"
     :class="classObject"
     @click="purchase"
+    v-tooltip="tooltip"
   >
     <span class="upgrade-title">{{ title }}</span>
     <span class="upgrade-description">{{ description }}</span>

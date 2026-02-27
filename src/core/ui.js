@@ -7,5 +7,7 @@ export const ui = createApp(GameUIComponent);
 const pinia = createPinia();
 
 ui.use(pinia);
-ui.use(ZeroTooltip);
+ui.use(ZeroTooltip, {
+  showWarnings: false
+});
 ui.mount("#ui");

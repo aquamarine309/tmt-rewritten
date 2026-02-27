@@ -15,12 +15,7 @@ const cost = computed(() => upgrade.cost);
 const title = computed(() => upgrade.title);
 const tooltip = computed(() => upgrade.config.tooltip || "");
 const description = computed(() => funOrVal(upgrade.config.description));
-const costResource = computed(() => {
-  if (upgrade.config.getCurrency) {
-    return upgrade.config.currencyName;
-  }
-  return layer.value.resName;
-});
+const costResource = computed(() => upgrade.resource.name);
 
 const classObject = computed(() => ({
   "main-btn": true,

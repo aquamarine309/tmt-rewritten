@@ -7,12 +7,8 @@ export class PrestigeState {
     this.layer = layer;
   }
   
-  get currency() {
-    return this.config.getBaseAmount();
-  }
-  
-  set currency(value) {
-    this.config.setBaseAmount(value);
+  get baseResource() {
+    return this.config.baseResource;
   }
   
   get type() {
@@ -42,10 +38,10 @@ export class PrestigeState {
   get canReset() {
     switch (this.type) {
       case LAYER_TYPE.NORMAL: {
-        return this.currency.gte(this.requirementAt(DC.D1));
+        return this.baseResource.value.gte(this.requirementAt(DC.D1));
       }
       case LAYER_TYPE.STATIC: {
-        return this.currency.gte(this.requirementAt(this.layer.resource.add(1)));
+        return this.baseResource.value.gte(this.requirementAt(this.layer.resource.value.add(1)));
       }
     }
     return false;
@@ -79,13 +75,13 @@ export class PrestigeState {
   
   get pending() {
     if (!this.canReset) return DC.D0;
-    const gain = this.gainedResourceAt(this.currency).floor();
+    const gain = this.gainedResourceAt(this.baseResource.value).floor();
     switch (this.type) {
       case LAYER_TYPE.NORMAL: {
         return gain;
       }
       case LAYER_TYPE.STATIC: {
-        return gain.minus(this.layer.resource);
+        return gain.minus(this.layer.resource.value);
       }
     }
     return null;
@@ -105,8 +101,7 @@ export class PrestigeState {
   
   reset() {
     if (!this.canReset) return;
-    const pending = this.pending;
-    this.layer.resource = this.layer.resource.add(pending);
+    this.layer.resource.add(this.pending);
     this.config.resetFn();
     EventHub.dispatch(GAME_EVENT.PRESTIGE_RESET, this.layer.id);
   }

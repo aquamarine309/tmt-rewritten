@@ -1,12 +1,5 @@
 import { GameUI } from "../core/event-hub";
 
-export class NotImplementedError extends Error {
-  constructor() {
-    super("The method is not implemented.");
-    this.name = "NotImplementedError";
-  }
-}
-
 const GlobalErrorHandler = {
   handled: false,
   cleanStart: false,

@@ -1,7 +1,7 @@
 import { DEV } from "@/env";
 import { usePlayerStore } from "./stores/player";
 import { EventHub, GAME_EVENT, GameUI } from "./event-hub";
-import { resourceProduction } from "@/production";
+import { Resources } from "@/resources";
 
 export const GameLoop = {
   interval: null,
@@ -48,7 +48,7 @@ export const GameLoop = {
 
     const seconds = diff / 1000;
     
-    player.resource = player.resource.add(resourceProduction().times(seconds));
+    Resources.default.tick(seconds);
 
     GameUI.update();
     EventHub.dispatch(GAME_EVENT.GAME_TICK_AFTER);

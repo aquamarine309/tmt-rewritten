@@ -10,12 +10,12 @@ export class MilestoneState extends GameMechanicState {
     return this.config.requirement;
   }
   
-  get currency() {
+  get resource() {
     return this.layer.resource;
   }
   
   get isReached() {
-    return this.currency.gte(this.requirement);
+    return this.resource.value.gte(this.requirement);
   }
   
   get isEffectActive() {

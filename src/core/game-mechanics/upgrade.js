@@ -5,21 +5,10 @@ export class UpgradeState extends GameMechanicState {
   constructor(config, layer) {
     super(config);
     this.layer = layer;
-    this._customCurrency = config.getCurrency !== undefined;
   }
   
-  get currency() {
-    if (this._customCurrency) {
-      return this.config.getCurrency();
-    }
-    return this.layer.resource;
-  }
-  
-  set currency(value) {
-    if (this._customCurrency) {
-      this.config.setCurrency(value);
-    }
-    this.layer.resource = value;
+  get resource() {
+    return this.config.resource || this.layer.resource;
   }
   
   get cost() {
@@ -31,7 +20,7 @@ export class UpgradeState extends GameMechanicState {
   }
   
   get isAffordable() {
-    return this.currency.gte(this.cost);
+    return this.resource.value.gte(this.cost);
   }
   
   get isAvailableForPurchase() {
@@ -62,7 +51,7 @@ export class UpgradeState extends GameMechanicState {
     if (!this.canBeBought) return;
     this.isBought = true;
     if (!this.isFree) {
-      this.currency = this.currency.sub(this.cost);
+      this.resource.subtract(this.cost);
     }
     this.config.onPurchased?.();
     EventHub.dispatch(GAME_EVENT.UPGRADE_BOUGHT, this.layer.id, this.id);

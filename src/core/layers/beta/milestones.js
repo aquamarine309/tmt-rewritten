@@ -4,6 +4,6 @@ export default [
   {
     id: 0,
     requirement: DC.D1,
-    description: "Unlock More Prestige Upgrades"
+    description: "Unlock More Alpha Upgrades"
   }
 ];

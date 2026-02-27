@@ -1,16 +1,16 @@
-import p from "./p";
-import n from "./n";
+import alpha from "./alpha";
+import beta from "./beta";
 
 export const LayerData = {
-  p,
-  n
+  alpha,
+  beta
 };
 
 export const LayerLayout = [
-  ["p"],
-  ["n"]
+  ["alpha"],
+  ["beta"]
 ];
 
 export const LayerConnections = [
-  ["p", "n"]
+  ["alpha", "beta"]
 ];

@@ -11,8 +11,8 @@ const { milestone } = defineProps({
 });
 
 const layer = computed(() => milestone.layer);
+const resource = computed(() => milestone.resource.name);
 const requirement = computed(() => milestone.requirement);
-const resource = computed(() => layer.value.config.prestige.resource);
 const description = computed(() => funOrVal(milestone.config.description));
 </script>
 

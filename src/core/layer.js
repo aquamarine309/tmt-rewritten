@@ -7,9 +7,10 @@ import { TabState } from "./tabs";
 import { UpgradeState, MilestoneState } from "./game-mechanics";
 import { state } from "./ui.init";
 import { DC } from "@/utils/constants";
-import { usePlayerStore } from "@/core/stores/player";
 import { Lazy } from "./cache";
 import Decimal from "break_eternity.js";
+import { Resources } from "@/resources";
+import { usePlayerStore } from "@/core/stores/player";
 
 export { LayerConnections, LayerLayout } from "./layers";
 
@@ -96,7 +97,7 @@ class LayerState {
   createPlayerData() {
     const playerData = this.config.getPlayerData();
     playerData.isUnlocked = false;
-    playerData.resource = this.config.prestige.startingResource || DC.D0;
+    playerData.resource = this.config.startingResource || DC.D0;
     if (this.upgrade !== null) {
       playerData.upgrades = new Set();
     }
@@ -108,11 +109,7 @@ class LayerState {
   }
   
   get resource() {
-    return this.data.resource;
-  }
-  
-  set resource(value) {
-    this.data.resource = value;
+    return this.config.resource;
   }
   
   tryUnlock(...args) {
@@ -126,10 +123,6 @@ class LayerState {
     for (const upgrade of this.upgrades.all) {
       upgrade.isBought = false;
     }
-  }
-  
-  get resName() {
-    return this.config.prestige.resource;
   }
 }
 

@@ -10,8 +10,7 @@ const { layer } = defineProps({
 });
 
 const prestige = computed(() => layer.prestige);
-const baseResource = computed(() => layer.config.prestige.baseResource);
-const resourceName = computed(() => layer.resName);
+const baseResource = computed(() => prestige.value.baseResource);
 
 const classObject = computed(() => ({
   "reset-btn": true,
@@ -29,11 +28,11 @@ function reset() {
       :class="classObject"
       @click="reset"
     >
-      <span>Reset for +{{ quantify(resourceName, prestige.pending, 0) }}</span>
+      <span>Reset for +{{ quantify(layer.resource.name, prestige.pending, 0) }}</span>
       <br>
-      <span>Next at: {{ quantify(baseResource, prestige.nextAt) }}</span>
+      <span>Next at: {{ quantify(baseResource.name, prestige.nextAt) }}</span>
     </button>
-    <div class="info">You have {{ quantify(baseResource, prestige.currency) }}.</div>
+    <div class="info">You have {{ quantify(baseResource.name, baseResource.value) }}.</div>
   </div>
 </template>
 

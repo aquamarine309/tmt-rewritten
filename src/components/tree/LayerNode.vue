@@ -1,56 +1,39 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { getNodePosition } from "./tree-layout-info";
-import { useGameUpdate } from "@/utils/use-game-update";
-import Decimal from "break_eternity.js";
 import { quantify } from "@/utils/format";
+import Decimal from "break_eternity.js";
 
-const props = defineProps({
+const { layer } = defineProps({
   layer: {
     type: Object,
     required: true
   }
 });
 
-const layer = props.layer;
-const layerName = computed(() => layer.name);
 const position = computed(() => getNodePosition(layer.id));
 const styleObject = computed(() => ({
   "--node-color": layer.config.color,
   left: position.value.x,
   top: `${position.value.y}px`
 }));
-const resource = ref(new Decimal(0));
-const isUnlocked = ref(false);
-const resourceName = computed(() => layer.config.prestige.resource);
-const upgradeAffordable = ref(false);
+const resource = computed(() => layer.resource);
 
 function showLayer() {
   layer.show();
 }
-
-function update() {
-  isUnlocked.value = layer.isUnlocked;
-  resource.value.copyFrom(layer.resource);
-  if (layer.cheapestUpgrade?.value) {
-    upgradeAffordable.value = layer.cheapestUpgrade.value.canBeBought;
-  } else {
-    upgradeAffordable.value = false;
-  }
-}
-useGameUpdate(update);
 </script>
 
 <template>
   <button
-    v-if="isUnlocked"
+    v-if="layer.isUnlocked"
     class="layer-node"
-    :class="{ 'layer-node--notify': upgradeAffordable }"
+    :class="{ 'layer-node--notify': layer.cheapestUpgrade?.isAffordable }"
     :style="styleObject"
     @click="showLayer"
-    v-tooltip="quantify(resourceName, resource, 0)"
+    v-tooltip="quantify(resource.name, resource.value, 0)"
   >
-    {{ layerName }}
+    {{ layer.name }}
   </button>
 </template>
 

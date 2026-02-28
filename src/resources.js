@@ -36,7 +36,7 @@ class ResourceState {
   }
   
   reset() {
-    this.value = this._startingValue;
+    this.value = funOrVal(this._startingValue);
   }
   
   get production() {

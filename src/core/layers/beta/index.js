@@ -24,13 +24,18 @@ export default {
     exponent: DC.D1,
     gainMult: DC.D1,
     gainExp: DC.D1,
-    base: DC.D2,
+    base: DC.D3,
     resetFn() {
       Resources.default.reset();
       Resources.alpha.reset();
       Layer.alpha.resetUpgrades();
     }
   },
-  tabs: ["BetaTab"],
+  tabs: [
+    {
+      name: "Beta",
+      is: "BetaTab"
+    }
+  ],
   milestones
 };

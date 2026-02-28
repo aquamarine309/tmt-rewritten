@@ -12,6 +12,7 @@ defineProps(["layer"]);
 <template>
   <div>
     <InfoBox :info="layer.info.first" />
+    <InfoBox :info="layer.info.newLetter" />
     <MainDisplay :layer />
     <ResetButton :layer />
     <UpgradeGrid :layer />

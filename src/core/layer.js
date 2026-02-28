@@ -11,10 +11,12 @@ import { Lazy } from "./cache";
 import Decimal from "break_eternity.js";
 import { Resources } from "@/resources";
 import { usePlayerStore } from "@/core/stores/player";
+import { reactive } from "vue";
+import { GameMechanicState } from "./game-mechanics";
 
 export { LayerConnections, LayerLayout } from "./layers";
 
-class LayerState {
+class LayerState extends GameMechanicState {
   prestige = null;
   tabs = null;
   upgrades = null;
@@ -22,24 +24,34 @@ class LayerState {
   info = null;
   
   cheapestUpgrade = null;
+  
+  functions = {};
+  customResources = {};
 
   constructor(config) {
-    this.config = config;
+    super(config);
     EventHub.logic.on(config.checkEvent, args => this.tryUnlock(...args));
     this.prestige = new PrestigeState(config.prestige, this);
     const tabs = config.tabs;
-    this.tabs = tabs.map((tab, index) => {
-      if (typeof tab === "string") {
-        return new TabState({
-          is: tab,
-          id: index
-        });
-      }
-      return new TabState({
+    this.tabs = tabs.map((tab, index) => (new TabState({
         id: index,
         ...tab
-      });
-    });
+      })
+    ));
+    
+    if (config.customFunctions) {
+      const custom = config.customFunctions;
+      for (const key in custom) {
+        this.functions[key] = custom[key].bind(this);
+      }
+    }
+    
+    if (config.customResources) {
+      const custom = config.customResources;
+      for (const key in custom) {
+        this.customResources[key] = custom[key];
+      }
+    }
     
     if (config.upgrades) {
       this.upgrades = mapGameDataToObject(
@@ -78,10 +90,6 @@ class LayerState {
      this.tabs[0].show();
   }
 
-  get id() {
-    return this.config.id;
-  }
-
   get name() {
     return this.config.name;
   }
@@ -98,6 +106,10 @@ class LayerState {
     const playerData = this.config.getPlayerData();
     playerData.isUnlocked = false;
     playerData.resource = this.config.startingResource || DC.D0;
+    const custom = this.customResources;
+    for (const key in custom) {
+      playerData[key] = custom[key].startingValue;
+    }
     if (this.upgrade !== null) {
       playerData.upgrades = new Set();
     }
@@ -124,11 +136,15 @@ class LayerState {
       upgrade.isBought = false;
     }
   }
+  
+  get isEffectActive() {
+    return this.isUnlocked;
+  }
 }
 
 export const Layer = mapGameDataToObject(
   LayerData,
-  config => new LayerState(config)
+  config => reactive(new LayerState(config))
 );
 
 export const Layers = {

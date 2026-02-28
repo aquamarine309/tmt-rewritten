@@ -21,8 +21,22 @@ export default {
     // Note: "isUnlocked" and "resource" property are defaultly added to it.
     return {};
   },
+  effects: {
+    words: {
+      effect: () => Resources.words.value.add(1).log10().add(1),
+      effectCondition: () => Layer.alpha.upgrades[21].isBought
+    }
+  },
   // Resource in this layer
   resource: Resources.alpha,
+  customResources: {
+    words: Resources.words
+  },
+  customFunctions: {
+    spellWord() {
+      Resources.words.add(1);
+    }
+  },
   // Prestige data
   prestige: {
     baseResource: Resources.default,
@@ -36,8 +50,17 @@ export default {
       Resources.default.value = DC.D0;
     }
   },
-  // Use component name or an object like { is: "InfoTab", isUnlocked: () => ... }
-  tabs: ["AlphaTab"],
+  tabs: [
+    {
+      name: "Alpha",
+      is: "AlphaTab"
+    },
+    {
+      name: "Words",
+      is: "WordsTab",
+      condition: () => Layer.alpha.upgrades[22].isBought
+    }
+  ],
   upgrades,
   info
 };

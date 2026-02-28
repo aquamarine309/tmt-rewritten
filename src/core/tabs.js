@@ -5,7 +5,7 @@ export class TabState {
     this.component = config.is;
     this.id = config.id;
     this.condition = config.condition;
-    this.isDefault = config.isDefault ?? false;
+    this.name = config.name;
   }
   
   get isUnlocked() {

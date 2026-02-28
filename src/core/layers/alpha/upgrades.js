@@ -53,6 +53,13 @@ export default {
     formatEffect: value => formatPow(value),
     cost: DC.D20,
     isUnlocked: () => Layer.alpha.upgrades[14].isBought && Layer.beta.milestones[0].isReached
+  },
+  22: {
+    id: 22,
+    title: "Alphabet Basic",
+    description: "Unlock 'Spell Word' button",
+    cost: DC.D40,
+    isUnlocked: () => Layer.alpha.upgrades[21].isBought
   }
 }
 

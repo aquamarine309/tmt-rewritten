@@ -59,7 +59,7 @@ function clearTab() {
 }
 
 .tab-panel {
-  padding-top: 7.5rem;
+  padding-top: 0;
 }
 
 .back-btn {

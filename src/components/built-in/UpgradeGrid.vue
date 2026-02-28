@@ -24,8 +24,10 @@ const visibleUpgrades = computed(() => {
 });
 
 
+const minRow = computed(() => visibleUpgrades.value.map(x => Math.floor(x.id / 10)).min());
 const maxRow = computed(() => visibleUpgrades.value.map(x => Math.floor(x.id / 10)).max());
 const maxColumn = computed(() => visibleUpgrades.value.map(x => x.id % 10).max());
+const range = computed(() => Array.range(minRow.value, maxRow.value - minRow.value + 1));
 
 function getUpgrade(x, y) {
   return upgrades.value[10 * x + y];
@@ -36,8 +38,8 @@ function getUpgrade(x, y) {
   <div class="upgrade-grid">
     <div
       class="upgrade-row"
-      v-for="i in maxRow"
-      :key="i + '-row'"
+      v-for="i in range"
+      :key="i + minRow + '-row'"
     >
       <template v-for="j in maxColumn">
         <UpgradeButton

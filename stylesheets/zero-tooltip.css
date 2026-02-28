@@ -95,3 +95,7 @@
 .zero-tooltip__shadow {
   box-shadow: 0 2px 12px #0000001a;
 }
+
+.zero-tooltip__container {
+  font-family: "Lucida Console", BlobFont, "Xia Lu Wen Kai";
+}

@@ -47,6 +47,7 @@ const tabUnlocked = computed(() => layer.value.tabs.filter(x => x.isUnlocked));
   height: 100%;
   position: relative;
   padding-top: 7.5rem;
+  overflow-y: auto;
 }
 
 .tab-container {
@@ -57,5 +58,6 @@ const tabUnlocked = computed(() => layer.value.tabs.filter(x => x.isUnlocked));
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  background: var(--color-base)
 }
 </style>

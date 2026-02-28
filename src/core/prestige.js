@@ -93,7 +93,7 @@ export class PrestigeState {
         return this.requirementAt(this.pending.add(1));
       }
       case LAYER_TYPE.STATIC: {
-        return this.requirementAt(this.pending.add(this.layer.resource).add(1));
+        return this.requirementAt(this.pending.add(this.layer.resource.value).add(1));
       }
     }
     return null;

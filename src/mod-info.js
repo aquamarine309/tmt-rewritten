@@ -7,7 +7,7 @@ export const ModInfo = Object.freeze({
   discordName: "",
   discordLink: "",
   startingResource: new Decimal(10),
-  versionDisplay: "0.5.0",
+  versionDisplay: "0.5.1",
   version: 0,
   versionTitle: "Literally nothing",
   allowSmall: true,

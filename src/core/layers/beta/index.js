@@ -28,6 +28,7 @@ export default {
     resetFn() {
       Resources.default.reset();
       Resources.alpha.reset();
+      Resources.words.reset();
       Layer.alpha.resetUpgrades();
     }
   },

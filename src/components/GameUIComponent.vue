@@ -7,6 +7,7 @@ import { computed } from "vue";
 import { ModInfo } from "@/mod-info";
 import { usePlayerStore } from "@/core/stores/player";
 import ForcedTabSidebar from "./ForcedTabSidebar";
+import ProgressOverlay from "./ProgressOverlay";
 
 const tabVisible = computed(() => state.layer !== "" || state.forcedTab !== "");
 const version = ModInfo.versionDisplay;
@@ -23,6 +24,7 @@ function clearTab() {
     v-if="state.initialized"
     class="game-ui"
   >
+    <ProgressOverlay />
     <div
       class="game-panel"
       v-if="!store.player.options.singlePage || !tabVisible"

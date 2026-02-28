@@ -60,7 +60,7 @@ export const Resources = {
   default: reactive(new ResourceState("Point", {
     getValue() { return usePlayerStore().player.resource; },
     setValue(value) { usePlayerStore().player.resource = value; },
-    startingValue() { return ModInfo.startingValue; },
+    startingValue() { return ModInfo.startingResource; },
     getProduction() {
       if (!Layer.alpha.upgrades[11].isBought) return DC.D0;
       return Effects.product(

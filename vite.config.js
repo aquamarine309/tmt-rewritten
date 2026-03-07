@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@framework': path.resolve(__dirname, 'src/framework'),
+      '@game': path.resolve(__dirname, 'src/game')
     },
     extensions: ['.js', '.vue', '.json']
   },

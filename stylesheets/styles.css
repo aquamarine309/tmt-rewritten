@@ -110,6 +110,7 @@ input:focus {
 
 button {
   font-family: monospace, BlobFont, "Xia Lu Wen Kai";
+  outline: none;
 }
 
 .main-btn {

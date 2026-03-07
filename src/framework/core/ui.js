@@ -1,0 +1,13 @@
+import { createApp } from "vue";
+import GameUIComponent from "@framework/components/GameUIComponent";
+import { createPinia } from "pinia";
+import ZeroTooltip from "zero-tooltip";
+
+export const ui = createApp(GameUIComponent);
+const pinia = createPinia();
+
+ui.use(pinia);
+ui.use(ZeroTooltip, {
+  showWarnings: false
+});
+ui.mount("#ui");

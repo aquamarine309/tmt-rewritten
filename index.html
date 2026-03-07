@@ -17,7 +17,7 @@
     Please update to a newer browser.
   </div>
   <div id="ui"></div>
-  <script type="module" src="src/main.js"></script>
+  <script type="module" src="src/framework/main.js"></script>
 </body>
 <script>
   // We use an IE only document variable to check here to force it to show the browser warning.
@@ -28,5 +28,11 @@
     document.getElementById("ui").style.display = "none";
     document.getElementById("browser-warning").style.display = "flex";
   }
+  window.errorMessages = [];
+  window.addEventListener("error", function(e) {
+    const errorMessage = `${e.message}\n(at: ${e.filename}:${e.lineno}:${e.colno})`;
+    setTimeout(() => alert(errorMessage), 1000);
+    window.errorMessages.push(errorMessage);
+  });
 </script>
 </html>

@@ -5,8 +5,8 @@
   <title>The Modding Tree Rewritten</title>
   <link rel="icon" type="png" href="./assets/icon-BkmSy0SO.png">
   <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
-  <script type="module" crossorigin src="./assets/index-BLWZMVlR.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-C6fUKm21.css">
+  <script type="module" crossorigin src="./assets/index-D4WVQ6TG.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DuQzWqDQ.css">
 </head>
 
 <body>
@@ -26,5 +26,11 @@
     document.getElementById("ui").style.display = "none";
     document.getElementById("browser-warning").style.display = "flex";
   }
+  window.errorMessages = [];
+  window.addEventListener("error", function(e) {
+    const errorMessage = `${e.message}\n(at: ${e.filename}:${e.lineno}:${e.colno})`;
+    setTimeout(() => alert(errorMessage), 1000);
+    window.errorMessages.push(errorMessage);
+  });
 </script>
 </html>

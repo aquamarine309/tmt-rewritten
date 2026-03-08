@@ -4,13 +4,13 @@ import HeaderInfo from "./HeaderInfo";
 import GameTab from "./GameTab";
 import { state } from "@framework/core/ui.init";
 import { computed } from "vue";
-import { ModInfo } from "@game/mod-info";
+import { getModInfo } from "@framework/mod-info";
 import { usePlayerStore } from "@framework/core/stores/player";
 import ForcedTabSidebar from "./ForcedTabSidebar";
 import ProgressOverlay from "./ProgressOverlay";
 
 const tabVisible = computed(() => state.layer !== "" || state.forcedTab !== "");
-const version = ModInfo.versionDisplay;
+const version = computed(() => getModInfo().versionDisplay);
 const store = computed(() => usePlayerStore());
 
 function clearTab() {

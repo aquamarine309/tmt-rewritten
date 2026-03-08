@@ -1,10 +1,10 @@
 <script setup>
 import { format, pluralize, quantifyInt } from "@framework/utils/format";
 import { computed } from "vue";
-import { Resources } from "@game/resources";
+import { Resources } from "@framework/resources";
 import { GameLoop } from "@framework/core/game-loop";
 
-const resource = computed(() => Resources.default);
+const resource = computed(() => Resources.getDefault());
 </script>
 
 <template>

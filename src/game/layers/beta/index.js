@@ -2,7 +2,7 @@ import { DC, LAYER_TYPE } from "@framework/utils/constants";
 import { GAME_EVENT } from "@framework/core/event-hub";
 import { Layer } from "@framework/core/layer";
 import { usePlayerStore } from "@framework/core/stores/player";
-import { Resources } from "@game/resources";
+import { Resources } from "@framework/resources";
 
 import milestones from "./milestones";
 
@@ -15,9 +15,9 @@ export default {
   getPlayerData() {
     return {};
   },
-  resource: Resources.beta,
+  resource: () => Resources.get("beta"),
   prestige: {
-    baseResource: Resources.alpha,
+    baseResource: () => Resources.get("alpha"),
     startingResource: DC.D0,
     type: LAYER_TYPE.STATIC,
     requirement: DC.E1,
@@ -26,9 +26,9 @@ export default {
     gainExp: DC.D1,
     base: DC.D3,
     resetFn() {
-      Resources.default.reset();
-      Resources.alpha.reset();
-      Resources.words.reset();
+      Resources.get("default").reset();
+      Resources.get("alpha").reset();
+      Resources.get("words").reset();
       Layer.alpha.resetUpgrades();
     }
   },

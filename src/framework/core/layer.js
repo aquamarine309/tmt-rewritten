@@ -1,5 +1,4 @@
 import { mapGameDataToObject } from "@framework/utils/map-game-data";
-import { LayerData } from "@game/layers";
 import { EventHub, GAME_EVENT } from "./event-hub";
 import { PrestigeState } from "./prestige";
 import { InfoState } from "./info";
@@ -9,24 +8,15 @@ import { state } from "./ui.init";
 import { DC } from "@framework/utils/constants";
 import { Lazy } from "./cache";
 import Decimal from "break_eternity.js";
-import { Resources } from "@game/resources";
+import { Resources } from "@framework/resources";
 import { usePlayerStore } from "@framework/core/stores/player";
 import { reactive } from "vue";
 import { GameMechanicState } from "./game-mechanics";
 
-export { LayerConnections, LayerLayout } from "@game/layers";
-
 class LayerState extends GameMechanicState {
-  prestige = null;
-  tabs = null;
-  upgrades = null;
-  milestones = null;
-  info = null;
-  
-  cheapestUpgrade = null;
-  
   functions = {};
   customResources = {};
+  tabs = null;
 
   constructor(config) {
     super(config);
@@ -45,7 +35,7 @@ class LayerState extends GameMechanicState {
     if (this.config.customResources) {
       const custom = this.config.customResources;
       for (const key in custom) {
-        this.customResources[key] = custom[key];
+        this.customResources[key] = custom[key]();
       }
     }
     
@@ -54,15 +44,19 @@ class LayerState extends GameMechanicState {
     this.bindUpgrades();
     this.bindMilestones();
     this.bindInfo();
+    this.bindCustomMechanics();
   }
   
   bindPrestige() {
+    this.prestige = null;
     if (this.config.prestige) {
       this.prestige = new PrestigeState(this.config.prestige, this);
     }
   }
   
   bindUpgrades() {
+    this.upgrades = null;
+    this.cheapestUpgrade = null;
     if (this.config.upgrades) {
       this.upgrades = mapGameDataToObject(
         this.config.upgrades,
@@ -87,6 +81,7 @@ class LayerState extends GameMechanicState {
   }
   
   bindMilestones() {
+    this.milestones = null;
     if (this.config.milestones) {
       this.milestones = mapGameDataToObject(
         this.config.milestones,
@@ -96,11 +91,29 @@ class LayerState extends GameMechanicState {
   }
   
   bindInfo() {
+    this.info = null;
     if (this.config.info) {
       this.info = mapGameDataToObject(
         this.config.info,
         info => new InfoState(info)
       );
+    }
+  }
+  
+  bindCustomMechanics() {
+    const mechanics = this.config.customMechanics;
+    if (!mechanics) return;
+    for (const mechanic of mechanics) {
+      this[mechanic.id] = null;
+      const CustomState = mechanic.state;
+      if (Array.isArray(mechanic.data)) {
+        this[mechanic.id] = mapGameDataToObject(
+          mechanic.data,
+          config => new CustomState(config, this)
+        );
+      } else {
+        this[mechanic.id] = new CustomState(mechanic.data, this);
+      }
     }
   }
   
@@ -144,7 +157,7 @@ class LayerState extends GameMechanicState {
   }
   
   get resource() {
-    return this.config.resource;
+    return this.config.resource();
   }
   
   tryUnlock(...args) {
@@ -165,10 +178,18 @@ class LayerState extends GameMechanicState {
   }
 }
 
-export const Layer = mapGameDataToObject(
-  LayerData,
-  config => reactive(new LayerState(config))
-);
+export let Layer = null;
+export let LayerLayout = null;
+export let LayerConnections = null;
+
+export function registerLayer(data) {
+  Layer = mapGameDataToObject(
+    data.layers,
+    config => reactive(new LayerState(config))
+  );
+  LayerLayout = data.layout;
+  LayerConnections = data.connections;
+}
 
 export const Layers = {
   getData() {

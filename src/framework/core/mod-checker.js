@@ -1,7 +1,7 @@
-import { ModInfo } from "@game/mod-info";
+import { getModInfo } from "@framework/mod-info";
 
 export function checkModID() {
-  if (ModInfo.id === null) {
+  if (getModInfo().id === null) {
     throw new Error("Please complete the mod info.");
   }
 }

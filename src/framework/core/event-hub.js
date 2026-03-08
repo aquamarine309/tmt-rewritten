@@ -1,5 +1,3 @@
-import { CUSTOM_EVENTS } from "@game/custom-events";
-
 export class EventHub {
   constructor() {
     this._handlers = {};
@@ -95,7 +93,5 @@ export const GAME_EVENT = {
   AFTER_LOADING: "AFTER_LOADING",
   LAYER_UNLOCKED: "LAYER_UNLOCKED",
   PRESTIGE_RESET: "PRESTIGE_RESET",
-  UPGRADE_BOUGHT: "UPGRADE_BOUGHT",
-  
-  ...CUSTOM_EVENTS
+  UPGRADE_BOUGHT: "UPGRADE_BOUGHT"
 };

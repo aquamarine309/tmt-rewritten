@@ -1,7 +1,7 @@
 import { format, formatX, formatPow } from "@framework/utils/format";
 import { DC } from "@framework/utils/constants";
 import { Layer } from "@framework/core/layer";
-import { Resources } from "@game/resources";
+import { Resources } from "@framework/resources";
 
 // Upgrade id means its position
 export default {
@@ -20,7 +20,7 @@ export default {
     title: "Alpha Boost",
     description: "Alpha Points boost point gain.",
     // Layer[id] get a LayerState instance
-    effect: () => Resources.alpha.value.pow(0.25).add(1),
+    effect: () => Resources.get("alpha").value.pow(0.25).add(1),
     // FormatEffect can show the effect with formatting
     formatEffect: value => formatX(value),
     cost: DC.D2,
@@ -30,7 +30,7 @@ export default {
     id: 13,
     title: "Self Powered",
     description: "Point boosts itself.",
-    effect: () => Resources.default.value.pow(0.1).div(5).add(1),
+    effect: () => Resources.get("default").value.pow(0.1).div(5).add(1),
     formatEffect: value => formatX(value),
     cost: DC.D5,
     isUnlocked: () => Layer.alpha.upgrades[12].isBought
@@ -39,7 +39,7 @@ export default {
     id: 14,
     title: "Easy Reset",
     description: "You can gain more Alpha Points based on Alpha Points you have.",
-    effect: () => Resources.alpha.value.add(1).log10().times(0.05).add(1).powEffectOf(Layer.alpha.upgrades[21]),
+    effect: () => Resources.get("alpha").value.add(1).log10().times(0.05).add(1).powEffectOf(Layer.alpha.upgrades[21]),
     formatEffect: value => formatX(value),
     cost: DC.E1,
     isUnlocked: () => Layer.alpha.upgrades[13].isBought,
@@ -49,7 +49,7 @@ export default {
     id: 21,
     title: "Search Upgrade",
     description: "Beta Point provides a power to Upgrade 14.",
-    effect: () => Resources.beta.value.add(1).sqrt(),
+    effect: () => Resources.get("beta").value.add(1).sqrt(),
     formatEffect: value => formatPow(value),
     cost: DC.D20,
     isUnlocked: () => Layer.alpha.upgrades[14].isBought && Layer.beta.milestones[0].isReached

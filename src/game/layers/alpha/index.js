@@ -2,7 +2,7 @@ import { DC, LAYER_TYPE } from "@framework/utils/constants";
 import { GAME_EVENT } from "@framework/core/event-hub";
 import { usePlayerStore } from "@framework/core/stores/player";
 import { Layer } from "@framework/core/layer";
-import { Resources } from "@game/resources";
+import { Resources } from "@framework/resources";
 
 import upgrades from "./upgrades";
 import info from "./info";
@@ -23,23 +23,23 @@ export default {
   },
   effects: {
     words: {
-      effect: () => Resources.words.value.add(1).log10().add(1),
+      effect: () => Resources.get("words").value.add(1).log10().add(1),
       effectCondition: () => Layer.alpha.upgrades[21].isBought
     }
   },
   // Resource in this layer
-  resource: Resources.alpha,
+  resource: () => Resources.get("alpha"),
   customResources: {
-    words: Resources.words
+    words: () => Resources.get("words")
   },
   customFunctions: {
     spellWord() {
-      Resources.words.add(1);
+      Resources.get("words").add(1);
     }
   },
   // Prestige data
   prestige: {
-    baseResource: Resources.default,
+    baseResource: () => Resources.get("default"),
     type: LAYER_TYPE.NORMAL, // See the-modding-tree
     requirement: DC.E1,
     exponent: DC.D0_5,
@@ -47,7 +47,7 @@ export default {
     gainExp: DC.D1,
     // Performs when reset
     resetFn() {
-      Resources.default.value = DC.D0;
+      Resources.get("default").value = DC.D0;
     }
   },
   tabs: [

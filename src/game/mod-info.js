@@ -1,17 +1,18 @@
 import Decimal from "break_eternity.js";
+import { registerModInfo } from "@framework/mod-info";
 
-export const ModInfo = Object.freeze({
+registerModInfo({
   name: "The ??? Tree",
   author: "nobody",
   id: "alphabet",
   discordName: "",
   discordLink: "",
   startingResource: new Decimal(10),
-  versionDisplay: "0.6.0",
+  versionDisplay: "0.7.0",
   version: 0,
   versionTitle: "Literally nothing",
   allowSmall: true,
-  pluralization: true
+  pluralization: true,
+  devSaveKey: "tmtr-dev-save",
+  saveKey: "tmtr-save"
 });
-
-export const WIN_TEXT = "Congratulations! You have reached the end and beaten this game, but for now...";

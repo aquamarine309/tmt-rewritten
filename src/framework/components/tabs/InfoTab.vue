@@ -1,5 +1,5 @@
 <script setup>
-import { ModInfo } from "@game/mod-info";
+import { getModInfo } from "@framework/mod-info";
 import { usePlayerStore } from "@framework/core/stores/player";
 import { formatTime } from "@framework/utils/format";
 import { computed, ref } from "vue";
@@ -8,8 +8,8 @@ import { useGameUpdate } from "@framework/utils/use-game-update";
 const store = usePlayerStore();
 const now = ref(Date.now());
 const timeDiff = computed(() => (now.value - store.player.records.gameCreated) / 1000);
-const name = ModInfo.name;
-const author = ModInfo.author;
+const name = computed(() => getModInfo().name);
+const author = computed(() => getModInfo().author);
 
 function update() {
   now.value = Date.now();

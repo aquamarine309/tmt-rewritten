@@ -9,6 +9,7 @@ import { EventHub, GAME_EVENT, GameUI } from "@framework/core/event-hub";
 import { usePlayerStore } from "./player";
 import { quantify } from "@framework/utils/format";
 import { state } from "@framework/core/ui.init";
+import { getModInfo } from "@framework/mod-info";
 
 export const useGameStorageStore = defineStore("gameStorage", {
   state: () => ({
@@ -19,7 +20,7 @@ export const useGameStorageStore = defineStore("gameStorage", {
 
   getters: {
     timeSinceLastSave: state => state._timeSinceLastSave,
-    saveKey: () => (DEV ? "tmtr-dev-save" : "tmtr-save"),
+    saveKey: () => (DEV ? getModInfo().devSaveKey : getModInfo().saveKey),
     canSave: () => true,
   },
   

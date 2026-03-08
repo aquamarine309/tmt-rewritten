@@ -1,4 +1,4 @@
-import { ModInfo } from "@game/mod-info";
+import { getModInfo } from "@framework/mod-info";
 import Decimal from "break_eternity.js";
 import { Layers } from "./layer";
 
@@ -12,8 +12,8 @@ export function getDefaultPlayer() {
       gameCreated: Date.now()
     },
     lastUpdate: Date.now(),
-    resource: Decimal.fromValue_noAlloc(ModInfo.startingResource),
-    version: ModInfo.version,
+    resource: Decimal.fromValue_noAlloc(getModInfo().startingResource),
+    version: getModInfo().version,
     layers: Layers.getData()
   };
 }

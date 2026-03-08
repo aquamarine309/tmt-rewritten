@@ -1,7 +1,7 @@
 import { DEV } from "@framework/env";
 import { usePlayerStore } from "./stores/player";
 import { EventHub, GAME_EVENT, GameUI } from "./event-hub";
-import { Resources } from "@game/resources";
+import { Resources } from "@framework/resources";
 import { reactive } from "vue";
 
 export const GameLoop = reactive({
@@ -52,7 +52,7 @@ export const GameLoop = reactive({
 
     const seconds = diff / 1000;
     
-    Resources.default.tick(seconds);
+    Resources.getDefault().tick(seconds);
 
     GameUI.update();
     EventHub.dispatch(GAME_EVENT.GAME_TICK_AFTER);

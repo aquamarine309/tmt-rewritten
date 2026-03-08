@@ -4,13 +4,13 @@ import { DC } from "./utils/constants";
 import { Layer } from "./core/layer";
 import { reactive } from "vue";
 
-export class ResourceState {
-  constructor(name, config) {
+class ResourceState {
+  constructor(config) {
     this._getValue = config.getValue;
     this._setValue = config.setValue;
     this._startingValue = config.startingValue || DC.D0;
     this._getProduction = config.getProduction;
-    this.name = name;
+    this.name = config.name;
   }
 
   get value() {
@@ -46,10 +46,41 @@ export class ResourceState {
   }
 }
 
-export function bindLayer(name, layerID, options = {}) {
-  return reactive(new ResourceState(name, {
-    getValue() { return usePlayerStore().getLayer(layerID).resource; },
-    setValue(value) { usePlayerStore().getLayer(layerID).resource = value; },
-    ...options
-  }));
-}
+export const Resources = {
+  _all: {},
+  
+  _default: null,
+  
+  register(id, config) {
+    if (!config) {
+      throw new Error("Config is required.");
+    }
+    if (this._all[id]) {
+      throw new Error("The resource has been registered.");
+    }
+    const resource = reactive(new ResourceState(config));
+    this._all[id] = resource;
+    if (config.isDefault) {
+      if (this._default !== null) {
+        throw new Error("Only single default resource is allowed.");
+      }
+      this._default = resource;
+    }
+  },
+  
+  getDefault() {
+    return this._default;
+  },
+  
+  bindLayer(id, layerID, options = {}) {
+    this.register(id, {
+      getValue() { return usePlayerStore().getLayer(layerID).resource; },
+      setValue(value) { usePlayerStore().getLayer(layerID).resource = value; },
+      ...options
+    });
+  },
+  
+  get(id) {
+    return this._all[id];
+  }
+};

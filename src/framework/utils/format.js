@@ -1,5 +1,5 @@
 import Decimal from "break_eternity.js";
-import { ModInfo } from "@game/mod-info";
+import { getModInfo } from "@framework/mod-info";
 
 const FORMAT_THRESHOLD = {
   EXP_NOMANTISSA: new Decimal("1e1000000"),
@@ -82,7 +82,7 @@ function regularFormat(num, precision) {
  * @returns {string}
  */
 export function format(decimal, precision = 2, allowSmall) {
-  allowSmall ??= ModInfo.allowSmall;
+  allowSmall ??= getModInfo().allowSmall;
   const num = Decimal.fromValue_noAlloc(decimal);
   if (isNaN(num.sign) || isNaN(num.layer) || isNaN(num.mag)) {
     return "NaN";
@@ -262,7 +262,7 @@ const pluralDatabase = new Map([]);
 export function pluralize(word, amount, plural) {
   if (word === undefined || amount === undefined) throw "Arguments must be defined";
 
-  if (!ModInfo.pluralization || isSingular(amount)) return word;
+  if (!getModInfo().pluralization || isSingular(amount)) return word;
   const existingPlural = plural ?? pluralDatabase.get(word);
   if (existingPlural !== undefined) return existingPlural;
 

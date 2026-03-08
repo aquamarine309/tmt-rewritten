@@ -1,10 +1,11 @@
 <script setup>
 import { state } from "@framework/core/ui.init";
-import * as components from "@game/components/tabs";
+import { getCustomComponents } from "@framework/core/ui";
 import { computed } from "vue";
 import { Layer } from "@framework/core/layer";
 import TabButton from "@framework/components/TabButton";
 
+const components = getCustomComponents();
 const layer = computed(() => Layer[state.layer]);
 const currentTab = computed(() => layer.value.tabs[state.tab]);
 const color = computed(() => layer.value.config.color);

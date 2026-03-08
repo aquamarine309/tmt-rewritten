@@ -8,7 +8,7 @@ export class PrestigeState {
   }
   
   get baseResource() {
-    return this.config.baseResource;
+    return this.config.baseResource();
   }
   
   get type() {

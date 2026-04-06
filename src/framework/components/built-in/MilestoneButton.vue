@@ -1,0 +1,60 @@
+<script setup>
+import { computed } from "vue";
+import EffectDisplay from "./EffectDisplay";
+import { quantify } from "@framework/utils/format";
+import { funOrVal } from "@framework/utils/extensions";
+
+const { milestone } = defineProps({
+  milestone: {
+    type: Object,
+    required: true
+  }
+});
+
+const layer = computed(() => milestone.layer);
+const resource = computed(() => milestone.resource.name);
+const requirement = computed(() => milestone.requirement);
+const description = computed(() => funOrVal(milestone.config.description));
+const styleObject = computed(() => {
+  const styles = milestone.config.styles;
+  if (!styles) return null;
+  const customStyle = {};
+  if (styles.common) {
+    for (const list in styles.common) {
+      customStyle[list] = styles.common[list];
+    }
+  }
+  if (styles.isReached && milestone.isReached) {
+    for (const list in styles.isReached) {
+      customStyle[list] = styles.isReached[list];
+    }
+  }
+  return customStyle;
+});
+</script>
+
+<template>
+  <button
+    class="main-btn milestone-btn"
+    :class="{ 'bought': milestone.isReached }"
+    :style="styleObject"
+  >
+    <span class="milestone-title">{{ quantify(resource, requirement, 0) }}</span>
+    <span>{{ description }}</span>
+    <EffectDisplay :config="milestone.config" />
+  </button>
+</template>
+
+<style scoped>
+.milestone-btn {
+  width: 40rem;
+  min-height: 8rem;
+  height: auto;
+  border-radius: 0;
+}
+
+.milestone-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+</style>

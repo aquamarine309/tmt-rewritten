@@ -1,0 +1,70 @@
+<script setup>
+import { state } from "@framework/core/ui.init";
+import { getCustomComponents } from "@framework/core/ui";
+import { computed } from "vue";
+import { Layer } from "@framework/core/layer";
+import TabButton from "@framework/components/TabButton";
+
+const components = getCustomComponents();
+const layer = computed(() => Layer[state.layer]);
+const currentTab = computed(() => layer.value.tabs[state.tab]);
+const styleObject = computed(() => ({
+  "--color-layer": layer.value.color
+}));
+const tabUnlocked = computed(() => layer.value.tabs.filter(x => x.isUnlocked));
+</script>
+
+<template>
+  <div class="game-tab">
+    <div
+      class="tab-container"
+      v-if="!state.forcedTab && tabUnlocked.length > 1"
+    >
+      <TabButton
+        :style="styleObject"
+        v-for="tab in tabUnlocked"
+        :key="tab.id"
+        :tab
+      />
+    </div>
+    <component
+      v-if="state.forcedTab"
+      :is="components[state.forcedTab]"
+      class="tab-content"
+    />
+    <component
+      v-else-if="currentTab"
+      :is="components[currentTab.component]"
+      :style="styleObject"
+      :layer="layer"
+      class="tab-content"
+    />
+  </div>
+</template>
+
+<style scoped>
+.game-tab {
+  --color-layer: var(--color-accent);
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding-top: 7.5rem;
+  overflow-y: auto;
+}
+
+.tab-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4rem 5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  background: var(--color-base)
+}
+
+.tab-content {
+  width: 100%;
+  height: 100%;
+}
+</style>
